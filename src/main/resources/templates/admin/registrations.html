@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Admin: Registrations - U-WRS</title>
+<style>body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5}
+.container{max-width:900px;margin:0 auto;padding:20px}
+h1{color:#2E5090}
+table{width:100%;border-collapse:collapse;background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+th{background:#2E5090;color:white;padding:12px;text-align:left}
+td{padding:12px;border-bottom:1px solid #eee}
+.badge{padding:4px 10px;border-radius:12px;font-size:12px;font-weight:bold;color:white}
+.active{background:#27ae60}.cancelled{background:#e74c3c}
+.btn{padding:8px 16px;background:#6c757d;color:white;text-decoration:none;border-radius:4px}
+</style></head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+<div class="container">
+  <h1>Registrations for "<span th:text="${workshop.title}"></span>"</h1>
+  <table>
+    <thead><tr><th>Participant</th><th>Email</th><th>Registered At</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr th:each="r : ${registrations}">
+        <td th:text="${r.user.name}"></td>
+        <td th:text="${r.user.email}"></td>
+        <td th:text="${r.createdAt}"></td>
+        <td><span class="badge" th:classappend="${r.status.name() == 'ACTIVE'} ? 'active' : 'cancelled'" th:text="${r.status}"></span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p th:if="${#lists.isEmpty(registrations)}">No registrations yet.</p>
+  <br><a href="/admin/workshops" class="btn">Back to Admin</a>
+</div>
+</body></html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Admin: Workshop Form - U-WRS</title>
+<style>body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5}
+.container{max-width:600px;margin:40px auto;padding:20px}
+.card{background:white;border-radius:8px;padding:30px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+h2{color:#2E5090}
+input,textarea{width:100%;padding:10px;margin:4px 0 4px;border:1px solid #ccc;border-radius:4px;box-sizing:border-box}
+label{font-weight:bold;color:#333;display:block;margin-top:12px}
+.btn{padding:12px 24px;color:white;border:none;border-radius:4px;cursor:pointer;font-size:14px;text-decoration:none}
+.btn-primary{background:#2E5090}.btn-secondary{background:#6c757d}
+.error-msg{color:#e74c3c;font-size:13px;margin:2px 0 8px}
+</style></head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+<div class="container">
+  <div class="card">
+    <h2 th:text="${isEdit} ? 'Edit Workshop' : 'Create New Workshop'"></h2>
+    <form th:action="${isEdit} ? @{/admin/workshops/{id}/edit(id=${workshopId})} : @{/admin/workshops/new}"
+          th:object="${workshop}" method="post">
+      <label>Title</label>
+      <input type="text" th:field="*{title}">
+      <div th:if="${#fields.hasErrors('title')}" class="error-msg" th:errors="*{title}"></div>
+      <label>Description</label>
+      <textarea rows="3" th:field="*{description}"></textarea>
+      <label>Location</label>
+      <input type="text" th:field="*{location}">
+      <div th:if="${#fields.hasErrors('location')}" class="error-msg" th:errors="*{location}"></div>
+      <label>Start Date/Time</label>
+      <input type="datetime-local" th:field="*{startDatetime}">
+      <div th:if="${#fields.hasErrors('startDatetime')}" class="error-msg" th:errors="*{startDatetime}"></div>
+      <label>Total Seats</label>
+      <input type="number" th:field="*{totalSeats}" min="1">
+      <div th:if="${#fields.hasErrors('totalSeats')}" class="error-msg" th:errors="*{totalSeats}"></div>
+      <div style="margin-top:20px;display:flex;gap:12px">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="/admin/workshops" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+</body></html>

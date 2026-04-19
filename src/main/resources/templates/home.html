@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>U-WRS - Workshops</title>
+<style>body{font-family:Arial,sans-serif;margin:0;background:#f5f5f5}
+.container{max-width:900px;margin:0 auto;padding:20px}
+.card{background:white;border-radius:8px;padding:20px;margin-bottom:16px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.badge{display:inline-block;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:bold}
+.active{background:#27ae60;color:white}.cancelled{background:#e74c3c;color:white}
+h1{color:#2E5090}a.btn{display:inline-block;padding:8px 16px;background:#2E5090;color:white;text-decoration:none;border-radius:4px}
+.alert-success{background:#d4edda;color:#155724;padding:12px;border-radius:4px;margin-bottom:16px}
+.alert-error{background:#f8d7da;color:#721c24;padding:12px;border-radius:4px;margin-bottom:16px}
+</style></head>
+<body>
+<div th:replace="~{fragments/nav :: navbar}"></div>
+<div class="container">
+  <h1>Workshops (Upcoming)</h1>
+  <div th:if="${success}" class="alert-success" th:text="${success}"></div>
+  <div th:if="${error}" class="alert-error" th:text="${error}"></div>
+  <div th:if="${#lists.isEmpty(workshops)}"><p>No workshops available.</p></div>
+  <div th:each="w : ${workshops}" class="card">
+    <h3 th:text="${w.title}" style="margin-top:0"></h3>
+    <p><strong>Date and Time:</strong> <span th:text="${w.startDatetime}"></span></p>
+    <p><strong>Location:</strong> <span th:text="${w.location}"></span></p>
+    <p><strong>Seats Remaining:</strong> <span th:text="${w.seatsRemaining}"></span> / <span th:text="${w.totalSeats}"></span></p>
+    <p><span class="badge" th:classappend="${w.status.name() == 'ACTIVE'} ? 'active' : 'cancelled'" th:text="${w.status}"></span></p>
+    <a th:href="@{/workshops/{id}(id=${w.id})}" class="btn">View Details</a>
+  </div>
+</div>
+</body></html>

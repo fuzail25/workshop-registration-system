@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="navbar" style="background:#2E5090;padding:12px 24px;display:flex;align-items:center;justify-content:space-between">
+  <a href="/" style="color:white;font-size:20px;font-weight:bold;text-decoration:none">U-WRS</a>
+  <div style="display:flex;gap:16px;align-items:center">
+    <a href="/" style="color:white;text-decoration:none">Home</a>
+    <a th:if="${isLoggedIn}" href="/my/registrations" style="color:white;text-decoration:none">My Registrations</a>
+    <a th:if="${isAdmin}" href="/admin/workshops" style="color:white;text-decoration:none">Admin</a>
+    <span th:if="${isLoggedIn}" style="color:#ccc" th:text="${currentUserEmail}"></span>
+    <form th:if="${isLoggedIn}" action="/logout" method="post" style="display:inline;margin:0">
+      <button type="submit" style="background:#e74c3c;color:white;border:none;padding:6px 14px;border-radius:4px;cursor:pointer">Logout</button>
+    </form>
+    <a th:unless="${isLoggedIn}" href="/login" style="color:white;text-decoration:none;background:#27ae60;padding:6px 14px;border-radius:4px">Login</a>
+    <a th:unless="${isLoggedIn}" href="/register" style="color:white;text-decoration:none;background:#e67e22;padding:6px 14px;border-radius:4px">Register</a>
+  </div>
+</nav>
+</html>
